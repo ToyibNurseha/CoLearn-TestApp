@@ -11,20 +11,6 @@ object SortHelper {
 
     fun getSortedQueryMovies(filter: String): SimpleSQLiteQuery {
         val simpleQuery = StringBuilder().append("SELECT * FROM photoEntity")
-        when (filter) {
-            POPULARITY -> {
-                simpleQuery.append("ORDER BY popularity DESC")
-            }
-            NEWEST -> {
-                simpleQuery.append("ORDER BY releaseDate DESC")
-            }
-            VOTE -> {
-                simpleQuery.append("ORDER BY voteAverage DESC")
-            }
-            RANDOM -> {
-                simpleQuery.append("ORDER BY RANDOM()")
-            }
-        }
         return SimpleSQLiteQuery(simpleQuery.toString())
     }
 

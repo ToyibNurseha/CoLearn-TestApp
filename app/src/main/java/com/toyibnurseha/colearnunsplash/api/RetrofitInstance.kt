@@ -2,6 +2,7 @@ package com.toyibnurseha.colearnunsplash.api
 
 
 import com.toyibnurseha.colearnunsplash.data.source.remote.network.UnsplashApi
+import com.toyibnurseha.colearnunsplash.utils.Constant.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,7 +17,7 @@ class RetrofitInstance {
                 .addInterceptor(logging)
                 .build()
             Retrofit.Builder()
-                .baseUrl("BASE_URL")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

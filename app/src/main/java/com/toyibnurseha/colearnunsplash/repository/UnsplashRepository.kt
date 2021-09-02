@@ -1,17 +1,13 @@
 package com.toyibnurseha.colearnunsplash.repository
 
-import com.toyibnurseha.colearnunsplash.data.response.UnsplashResponse
 import com.toyibnurseha.colearnunsplash.data.response.UnsplashResponseItem
 import com.toyibnurseha.colearnunsplash.data.source.local.UnsplashLocalDataSource
-import com.toyibnurseha.colearnunsplash.data.source.local.entity.UnsplashEntity
 import com.toyibnurseha.colearnunsplash.data.source.remote.UnsplashRemoteDataSource
 import com.toyibnurseha.colearnunsplash.data.source.remote.network.ApiResponse
-import com.toyibnurseha.colearnunsplash.data.source.remote.response.ListImageResponse
 import com.toyibnurseha.colearnunsplash.domain.model.UnsplashModel
-import com.toyibnurseha.colearnunsplash.utils.AppExecutors
 import com.toyibnurseha.colearnunsplash.utils.DataMapper
 import com.toyibnurseha.themoviedb.data.NetworkBoundResource
-import com.toyibnurseha.themoviedb.data.Resource
+import com.toyibnurseha.colearnunsplash.data.source.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

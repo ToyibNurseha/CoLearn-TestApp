@@ -6,8 +6,10 @@ import com.toyibnurseha.colearnunsplash.data.source.remote.network.ApiResponse
 import com.toyibnurseha.colearnunsplash.data.source.remote.network.UnsplashApi
 import com.toyibnurseha.colearnunsplash.data.source.remote.response.ListImageResponse
 import com.toyibnurseha.colearnunsplash.utils.Constant
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class UnsplashRemoteDataSource(private val unsplashApi: UnsplashApi) {
 
@@ -24,7 +26,7 @@ class UnsplashRemoteDataSource(private val unsplashApi: UnsplashApi) {
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
 }

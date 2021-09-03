@@ -1,8 +1,10 @@
 package com.toyibnurseha.colearnunsplash.utils
 
-import android.graphics.Movie
 import com.toyibnurseha.colearnunsplash.data.response.UnsplashResponseItem
+import com.toyibnurseha.colearnunsplash.data.source.local.entity.SearchEntity
 import com.toyibnurseha.colearnunsplash.data.source.local.entity.UnsplashEntity
+import com.toyibnurseha.colearnunsplash.data.source.remote.response.search.SearchResponse
+import com.toyibnurseha.colearnunsplash.domain.model.SearchModel
 import com.toyibnurseha.colearnunsplash.domain.model.UnsplashModel
 
 object DataMapper {
@@ -20,8 +22,8 @@ object DataMapper {
 //                it.links,
                 "",
                 it.updated_at,
-//                it.urls,
-//                it.user,
+                it.urls,
+//                null,
                 it.width,
             )
             photoList.add(movie)
@@ -39,13 +41,75 @@ object DataMapper {
                 it.height,
                 it.id,
                 it.likes,
-//                null,
+//                it.links,
                 it.promoted_at,
                 it.updated_at,
+                it.urls,
 //                null,
 //                null,
                 it.width,
             )
         }
+    }
+
+    fun mapUnsplashSearchResponseToEntities(input: SearchResponse): SearchEntity {
+        val photosEntity = ArrayList<UnsplashEntity>()
+        input.results.map {
+            val photo = UnsplashEntity(
+                "it.alt_description",
+                it.color,
+                it.created_at,
+                "",
+                it.height,
+                it.id,
+                it.likes,
+//                it.links,
+                "",
+                it.updated_at,
+                it.urls,
+//                null,
+                it.width,
+            )
+            photosEntity.add(photo)
+        }
+        return SearchEntity(
+            input.total,
+            input.totalPages,
+            photosEntity
+        )
+    }
+
+    fun mapEntitiesSearchToDomain(input: SearchEntity?): SearchModel {
+        val photoList = ArrayList<UnsplashModel>()
+        input?.results?.map {
+            val photo = UnsplashModel(
+                it.alt_description,
+                it.color,
+                it.created_at,
+                "",
+                it.height,
+                it.id,
+                it.likes,
+//                it.links,
+                "",
+                it.updated_at,
+                it.urls,
+//                null,
+                it.width,
+            )
+            photoList.add(photo)
+        }
+        input?.let{
+            return SearchModel(
+                input.total,
+                input.totalPages,
+                photoList
+            )
+        }
+        return SearchModel(
+            null,
+            null,
+            null,
+        )
     }
 }

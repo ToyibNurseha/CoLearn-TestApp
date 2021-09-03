@@ -9,8 +9,13 @@ object SortHelper {
     const val NEWEST = "Newest"
     const val RANDOM = "Random"
 
-    fun getSortedQueryMovies(filter: String): SimpleSQLiteQuery {
+    fun getSorted(filter: String): SimpleSQLiteQuery {
         val simpleQuery = StringBuilder().append("SELECT * FROM photoEntity")
+        return SimpleSQLiteQuery(simpleQuery.toString())
+    }
+
+    fun getSortedSearch(filter: String): SimpleSQLiteQuery {
+        val simpleQuery = StringBuilder().append("SELECT * FROM searchEntity")
         return SimpleSQLiteQuery(simpleQuery.toString())
     }
 

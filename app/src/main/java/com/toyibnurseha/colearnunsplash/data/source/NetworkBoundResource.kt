@@ -1,6 +1,5 @@
-package com.toyibnurseha.themoviedb.data
+package com.toyibnurseha.colearnunsplash.data.source
 
-import com.toyibnurseha.colearnunsplash.data.source.Resource
 import com.toyibnurseha.colearnunsplash.data.source.remote.network.ApiResponse
 import kotlinx.coroutines.flow.*
 

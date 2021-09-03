@@ -21,7 +21,7 @@ data class UnsplashModel(
     val promoted_at: String,
     @ColumnInfo(name = "updatedAt")
     val updated_at: String,
-//    val urls: Urls,
+    val urls: Urls,
 //    val user: User,
     val width: Int
 )

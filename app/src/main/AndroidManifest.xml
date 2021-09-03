@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.toyibnurseha.colearnunsplash">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ColearnUnsplash"
-        android:name=".MyApplication"
         tools:node="replace">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

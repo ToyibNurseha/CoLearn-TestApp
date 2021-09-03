@@ -1,14 +1,17 @@
-package com.toyibnurseha.colearnunsplash.ui
+package com.toyibnurseha.colearnunsplash.ui.home
 
-import android.graphics.Movie
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.toyibnurseha.colearnunsplash.R
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.toyibnurseha.colearnunsplash.data.source.Resource
 import com.toyibnurseha.colearnunsplash.databinding.ActivityMainBinding
 import com.toyibnurseha.colearnunsplash.domain.model.UnsplashModel
+import com.toyibnurseha.colearnunsplash.ui.adapter.PhotoAdapter
+import com.toyibnurseha.colearnunsplash.ui.search.SearchActivity
+import com.toyibnurseha.colearnunsplash.ui.viewModel.MainViewModel
 import com.toyibnurseha.colearnunsplash.utils.SortHelper
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -18,17 +21,31 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapterPhoto: PhotoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        adapterPhoto = PhotoAdapter()
+
+        binding.etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val text = binding.etSearch.text?.trim()
+                val intent = Intent(this, SearchActivity::class.java).putExtra(
+                    SearchActivity.SEARCH_QUERY,
+                    text.toString()
+                )
+                startActivity(intent)
+            }
+            false
+        }
 
         setList(sort)
     }
 
     private fun setList(sort: String) {
-        viewModel.getMovies(sort).observe(this, photoObserver)
+        viewModel.getRandomPhoto(sort).observe(this, photoObserver)
     }
 
     private val photoObserver = Observer<Resource<List<UnsplashModel>>> { movies ->
@@ -39,7 +56,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 is Resource.Success -> {
 //                    setDataState(DataState.SUCCESS)
-//                    moviesAdapter.setData(movies.data)
+                    binding.rvPhotos.adapter = adapterPhoto
+                    binding.rvPhotos.layoutManager =
+                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    adapterPhoto.setData(movies.data)
                     print(movies.data)
                 }
                 is Resource.Error -> {

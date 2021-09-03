@@ -6,8 +6,10 @@ import com.toyibnurseha.colearnunsplash.data.source.remote.UnsplashRemoteDataSou
 import com.toyibnurseha.colearnunsplash.data.source.remote.network.ApiResponse
 import com.toyibnurseha.colearnunsplash.domain.model.UnsplashModel
 import com.toyibnurseha.colearnunsplash.utils.DataMapper
-import com.toyibnurseha.themoviedb.data.NetworkBoundResource
+import com.toyibnurseha.colearnunsplash.data.source.NetworkBoundResource
 import com.toyibnurseha.colearnunsplash.data.source.Resource
+import com.toyibnurseha.colearnunsplash.data.source.remote.response.search.SearchResponse
+import com.toyibnurseha.colearnunsplash.domain.model.SearchModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -41,5 +43,37 @@ class UnsplashRepository(
             }
 
         }.asFlow()
+
+    override fun getSearch(
+        query: String,
+        orderBy: String,
+        orientation: String,
+        page: Int
+    ): Flow<Resource<SearchModel>>  =
+        object : NetworkBoundResource<SearchModel, SearchResponse>() {
+
+            override fun shouldFetch(data: SearchModel?): Boolean {
+                return true
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<SearchResponse>> {
+                return remoteDataSource.getSearch(query, orderBy, orientation, page)
+            }
+
+            override suspend fun saveCallResult(data: SearchResponse) {
+                //map response to entities
+                val movieList = DataMapper.mapUnsplashSearchResponseToEntities(data)
+                localRemoteDataSource.insertSearchPhotos(movieList)
+            }
+
+            override fun loadFromDB(): Flow<SearchModel> {
+                return localRemoteDataSource.getSearch(query).map {
+                    //map entities to domain
+                    DataMapper.mapEntitiesSearchToDomain(it)
+                }
+            }
+
+        }.asFlow()
+
 
 }

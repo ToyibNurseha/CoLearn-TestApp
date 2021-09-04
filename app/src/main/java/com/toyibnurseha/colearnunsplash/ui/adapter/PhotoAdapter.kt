@@ -47,6 +47,13 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(photoData: UnsplashModel) {
             with(binding) {
+
+                itemPhoto.setOnClickListener {
+                    listener?.let {
+                        it(photoData)
+                    }
+                }
+
                 Glide.with(itemView.context)
                     .load(photoData.urls.small)
                     .listener(object : RequestListener<Drawable> {
@@ -74,11 +81,11 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
                     .into(ivImage)
             }
         }
+    }
 
-        init {
-            binding.root.setOnClickListener {
-                onItemClick?.invoke(photos[adapterPosition])
-            }
-        }
+    private var listener: ((UnsplashModel?) -> Unit)? = null
+
+    fun setOnItemClickListener(clickListener: ((UnsplashModel?) -> Unit)?) {
+        listener = clickListener
     }
 }

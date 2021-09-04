@@ -9,8 +9,8 @@ interface UnsplashUseCase {
     fun getRandomPhotos(sort: String): Flow<Resource<List<UnsplashModel>>>
     fun getSearch(
         query: String,
-        orderBy: String,
-        orientation: String,
+        colorSort: String?,
+        orientation: String?,
         page: Int,
     ): Flow<Resource<SearchModel>>
 }

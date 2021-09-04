@@ -22,12 +22,15 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     var onItemClick: ((UnsplashModel) -> Unit)? = null
 
     fun setData(newListData: List<UnsplashModel>?) {
-        if (newListData == null) return
-        val diffUtilCallback = DiffUtils(photos, newListData)
-        val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
+//        if (newListData == null) return
+//        val diffUtilCallback = DiffUtils(photos, newListData)
+//        val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
         photos.clear()
-        photos.addAll(newListData)
-        diffResult.dispatchUpdatesTo(this)
+        if (newListData != null) {
+            photos.addAll(newListData)
+        }
+            notifyDataSetChanged()
+//        diffResult.dispatchUpdatesTo(this)
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<UnsplashModel>() {
@@ -49,16 +52,22 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.bind(differ.currentList[position])
-        holder.bind(photos[position])
+        holder.bind(differ.currentList[position])
+//        holder.bind(photos[position])
     }
 
-    override fun getItemCount(): Int  = photos.size
+    override fun getItemCount(): Int  = differ.currentList.size
 
     inner class ViewHolder(private val binding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(photoData: UnsplashModel) {
             with(binding) {
+                itemView.setOnClickListener {
+                    listener?.let {
+                        it(photoData)
+                    }
+                }
+
                 Glide.with(itemView.context)
                     .load(photoData.urls.small)
                     .listener(object : RequestListener<Drawable> {
@@ -86,11 +95,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
                     .into(ivImage)
             }
         }
+    }
 
-        init {
-            binding.root.setOnClickListener {
-                onItemClick?.invoke(photos[adapterPosition])
-            }
-        }
+    private var listener: ((UnsplashModel?) -> Unit)? = null
+
+    fun setOnItemClickListener(clickListener: ((UnsplashModel?) -> Unit)?) {
+        listener = clickListener
     }
 }

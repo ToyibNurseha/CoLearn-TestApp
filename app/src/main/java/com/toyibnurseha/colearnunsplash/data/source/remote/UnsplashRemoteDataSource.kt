@@ -28,10 +28,10 @@ class UnsplashRemoteDataSource(private val unsplashApi: UnsplashApi) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getSearch(query: String, orderBy: String, orientation: String, page: Int) : Flow<ApiResponse<SearchResponse>> {
+    suspend fun getSearch(query: String, colorSort: String? = null, orientation: String? = null, page: Int) : Flow<ApiResponse<SearchResponse>> {
         return flow {
             try {
-                val response = unsplashApi.getSearch(Constant.API_KEY, query, Constant.TOTAL_QUERY_PAGE, page,  null, null)
+                val response = unsplashApi.getSearch(Constant.API_KEY, query, Constant.TOTAL_QUERY_PAGE, page,  colorSort, orientation)
                 if(response.results.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
                 }else {

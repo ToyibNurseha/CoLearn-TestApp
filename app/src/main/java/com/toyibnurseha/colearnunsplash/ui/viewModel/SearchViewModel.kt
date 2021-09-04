@@ -10,6 +10,6 @@ import com.toyibnurseha.colearnunsplash.domain.usecase.UnsplashUseCase
 
 class SearchViewModel(private val unsplashUseCase: UnsplashUseCase) : ViewModel() {
 
-    fun getSearch(query: String, page: Int): LiveData<Resource<SearchModel>> =
-        unsplashUseCase.getSearch(query, orderBy = "", orientation = "", page = page).asLiveData()
+    fun getSearch(query: String, colorSort: String? = null, orientation: String? = null, page: Int): LiveData<Resource<SearchModel>> =
+        unsplashUseCase.getSearch(query, colorSort = colorSort, orientation = orientation, page = page).asLiveData()
 }

@@ -10,8 +10,8 @@ class UnsplashAppInteractor(private val repo: UnsplashRepository) : UnsplashUseC
     override fun getRandomPhotos(sort: String): Flow<Resource<List<UnsplashModel>>>  = repo.getAllRandomPhotos(sort)
     override fun getSearch(
         query: String,
-        orderBy: String,
-        orientation: String,
+        colorSort: String?,
+        orientation: String?,
         page: Int
-    ): Flow<Resource<SearchModel>> = repo.getSearch(query, orderBy, orientation, page)
+    ): Flow<Resource<SearchModel>> = repo.getSearch(query, colorSort, orientation, page)
 }

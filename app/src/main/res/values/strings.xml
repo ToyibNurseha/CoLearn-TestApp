@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Colearn Unsplash</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="any_color">Any Color</string>
+    <string name="black_and_white">Black And White</string>
+    <string name="orientation">Orientation</string>
+    <string name="any">Any</string>
+    <string name="landscape">Landscape</string>
+    <string name="portrait">Portrait</string>
+    <string name="no_description">No description</string>
 </resources>

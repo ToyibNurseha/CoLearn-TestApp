@@ -19,7 +19,7 @@ interface UnsplashApi {
         @Query("query") query: String,
         @Query("per_page") perPage:Int,
         @Query("page") page:Int,
-        @Query("order_by") orderBy: String?,
+        @Query("color") orderBy: String?,
         @Query("orientation") orientation: String?,
     ) : SearchResponse
 

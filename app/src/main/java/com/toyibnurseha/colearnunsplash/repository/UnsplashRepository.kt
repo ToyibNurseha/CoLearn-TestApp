@@ -46,18 +46,19 @@ class UnsplashRepository(
 
     override fun getSearch(
         query: String,
-        orderBy: String,
-        orientation: String,
+        colorSort: String?,
+        orientation: String?,
         page: Int
     ): Flow<Resource<SearchModel>>  =
         object : NetworkBoundResource<SearchModel, SearchResponse>() {
 
             override fun shouldFetch(data: SearchModel?): Boolean {
+                val reData = data?.results
                 return true
             }
 
             override suspend fun createCall(): Flow<ApiResponse<SearchResponse>> {
-                return remoteDataSource.getSearch(query, orderBy, orientation, page)
+                return remoteDataSource.getSearch(query, colorSort, orientation, page)
             }
 
             override suspend fun saveCallResult(data: SearchResponse) {

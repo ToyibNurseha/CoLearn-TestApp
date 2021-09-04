@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface UnsplashDataSource {
     fun getAllRandomPhotos(sort: String): Flow<Resource<List<UnsplashModel>>>
-    fun getSearch(query: String, orderBy: String, orientation: String, page: Int) : Flow<Resource<SearchModel>>
+    fun getSearch(query: String, colorSort: String?, orientation: String?, page: Int) : Flow<Resource<SearchModel>>
 }
